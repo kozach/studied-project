@@ -2,22 +2,30 @@
 
     // http://rosspenman.com/pushstate-jquery/
 
+
+
     var $main = $("#ajax-content");
     var $title = document.title;
+    var $head = $('head');
     var $body = $("body");
+
+    $head.append('<style type="text/css"> .ajax-loading #ajax-content {display: none; } .ajax-loading #spinner {display: block; } #spinner {display: none; } </style>');
+    $body.append('<svg id="spinner" width="120" height="30" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg" fill="#000"> <circle cx="15" cy="15" r="15"> <animate attributeName="r" from="15" to="15"begin="0s" dur="0.8s"values="15;9;15" calcMode="linear"repeatCount="indefinite" /> <animate attributeName="fill-opacity" from="1" to="1"begin="0s" dur="0.8s"values="1;.5;1" calcMode="linear"repeatCount="indefinite" /> </circle> <circle cx="60" cy="15" r="9" fill-opacity="0.3"> <animate attributeName="r" from="9" to="9"begin="0s" dur="0.8s"values="9;15;9" calcMode="linear"repeatCount="indefinite" /> <animate attributeName="fill-opacity" from="0.5" to="0.5"begin="0s" dur="0.8s"values=".5;1;.5" calcMode="linear"repeatCount="indefinite" /> </circle> <circle cx="105" cy="15" r="15"> <animate attributeName="r" from="15" to="15"begin="0s" dur="0.8s"values="15;9;15" calcMode="linear"repeatCount="indefinite" /> <animate attributeName="fill-opacity" from="1" to="1"begin="0s" dur="0.8s"values="1;.5;1" calcMode="linear"repeatCount="indefinite" /> </circle> </svg>');
 
     var ajaxLoad = function(response, status, xhr) {
       if (status === 'success') {
         $title = response.match(/<title>(.*?)<\/title>/)[1]
-        loadAnimation('end');
       } else {
         loadPage('/404.html');
-        loadAnimation('end');
       }
+      setTimeout(function() { 
+        $body.removeClass('ajax-loading');
+        setTitle();
+      }, 1000)
     };
 
     var loadPage = function(href) {
-      loadAnimation('start');
+      $body.addClass('ajax-loading');
       $main.load(href + " #ajax-content", ajaxLoad, 'html');
     };
 
@@ -25,17 +33,6 @@
       document.title = $title;
     };
 
-    var loadAnimation = function(command) {
-      if (command === 'start') {
-        // $main.hide(0);
-        $body.addClass('ajax-loading');
-      }
-      if (command === 'end') {
-        // $main.show('fast');
-        $body.removeClass('ajax-loading');
-        setTitle();
-      }
-    };
     $(document).on("click", "a.ajax-link", function() {
       var href = $(this).attr("href");
       if (href.indexOf('://') === -1 && href.indexOf('#') === -1) {
