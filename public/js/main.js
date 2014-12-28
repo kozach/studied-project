@@ -4,15 +4,16 @@
 
     var $main = $("#ajax-content");
     var $title = document.title;
+    var $body = $("body");
 
     var ajaxLoad = function(response, status, xhr) {
       if (status === 'success') {
-        $title = response
-          .match(/<title>(.*?)<\/title>/)[1]
+        $title = response.match(/<title>(.*?)<\/title>/)[1]
+        loadAnimation('end');
       } else {
         loadPage('/404.html');
+        loadAnimation('end');
       }
-      loadAnimation('end');
     };
 
     var loadPage = function(href) {
@@ -26,10 +27,12 @@
 
     var loadAnimation = function(command) {
       if (command === 'start') {
-        $main.hide(0);
+        // $main.hide(0);
+        $body.addClass('ajax-loading');
       }
       if (command === 'end') {
-        $main.show('fast');
+        // $main.show('fast');
+        $body.removeClass('ajax-loading');
         setTitle();
       }
     };
