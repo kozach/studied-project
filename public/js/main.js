@@ -3,8 +3,8 @@ Modernizr.load({
     "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js",
-    "/css/outdatedBrowser.min.css",
-    "/js/outdatedBrowser.min.js"
+    "css/outdatedBrowser.min.css",
+    "js/outdatedBrowser.min.js"
   ],
   complete: function() {
     (function($) {
