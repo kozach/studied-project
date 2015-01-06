@@ -1,3 +1,14 @@
+Modernizr.load({
+  load: ["https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js", "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js", "https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"],
+  complete: function() {
+    (function($) {
+      setTimeout("$('#loader').fadeOut(300);", 1000)
+    })(jQuery);
+  }
+});
+
+
+
 // Routing
 // var HomeView = Backbone.View.extend({
 //   template: '<h1>Home</h1>',
