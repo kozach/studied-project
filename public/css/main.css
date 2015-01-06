@@ -1,3 +1,32 @@
-.js #noJs {
+html.js #noJs {
 	display: none;
+}
+html.no-js #loader {
+	display: none;
+}
+
+/* DISABLED JS STYLE */
+#noJs {
+	font-size: 24px;
+	position: fixed;
+	top: 30%;
+	width: 100%;
+	text-align: center;
+}
+
+/* LOADER STYLE */
+
+html.svg #loader {
+	background: url("/images/spinner.svg") no-repeat center center;
+}
+
+#loader {
+	background: url("/images/spinner.gif") no-repeat center center;
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	top: 50%;
+	right: 50%;
+	margin-top: -25px;
+	margin-right: -25px;
 }
