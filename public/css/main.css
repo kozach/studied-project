@@ -1,7 +1,11 @@
-html.js #noJs {
-	display: none;
+html.loading #loader {
+	display: block;
 }
-html.no-js #loader {
+html.no-js #loader,
+html.no-js #main,
+html.loading #main,
+html.js #noJs,
+#loader {
 	display: none;
 }
 

@@ -2,24 +2,17 @@ Modernizr.load({
   load: [
     "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js",
-    "/css/outdatedbrowser.min.css",
-    "/js/outdatedbrowser.min.js"
+    "https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"
   ],
   complete: function() {
     (function($) {
-      setTimeout("$('#loader').fadeOut(300);", 1000)
-      outdatedBrowser({
-        bgColor: '#f25648',
-        color: '#ffffff',
-        lowerThan: 'transform',
-        languagePath: '/lang/en.html'
-      })
+      // $('#loader').fadeOut(300);
+      setTimeout("$('html').removeClass('loading');", 1000)
     })(jQuery);
   },
-  callback: function(url, result, key) {
-    console.log(key);
-  }
+  // callback: function(url, result, key) {
+  //   console.log(key);
+  // }
 });
 
 // Routing
