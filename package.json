@@ -8,7 +8,10 @@
   },
   "dependencies": {
     "express": "~4.9.x",
-    "compression": "~1.2.2"
+    "compression": "~1.2.2",
+    "body-parser": "~1.10.1",
+    "mongoose": "~3.8.21",
+    "method-override": "~2.3.1"
   },
   "engines": {
     "node": "0.10.x"

@@ -1,0 +1,11 @@
+{
+    "port": 8080,
+    "mongo": {
+        "uri": "mongodb://heroku_app32818989:21bthhmgvrlcdb701mm4p0fd9e@ds029911.mongolab.com:29911/heroku_app32818989",
+        "options": {
+            "server": {
+                "auto_reconnect": true
+            }
+        }
+    }
+}

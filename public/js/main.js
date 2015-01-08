@@ -1,19 +1,9 @@
-Modernizr.load({
-  load: [
-    "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"
-  ],
-  complete: function() {
-    (function($) {
-      // $('#loader').fadeOut(300);
-      setTimeout("$('html').removeClass('loading');", 1000)
-    })(jQuery);
-  },
-  // callback: function(url, result, key) {
-  //   console.log(key);
-  // }
-});
+
+(function($) {
+  // $('#loader').fadeOut(300);
+  setTimeout("$('html').removeClass('loading');", 1000)
+
+
 
 // Routing
 // var HomeView = Backbone.View.extend({
@@ -130,56 +120,59 @@ Modernizr.load({
 
 // Log
 
-// var Entity = Backbone.Model.extend({
-//   // urlRoot: 'http://localhost:1337/user',
-//   defaults: {
-//     startDate: '',
-//     endDate: '',
-//     source: '',
-//     format: '',
-//     subjects: '',
-//     title: '',
-//     author: '',
-//     titleOriginal: '',
-//     rating: '',
-//     duration: '',
-//     year: '',
-//     description: '',
-//     review: '',
-//     link: '',
-//     language: '',
-//     tags: []
-//   }
-// });
+var Entity = Backbone.Model.extend({
+  // urlRoot: 'http://localhost:1337/user',
+  defaults: {
+    startDate: '',
+    endDate: '',
+    source: '',
+    format: '',
+    subjects: '',
+    title: '',
+    author: '',
+    titleOriginal: '',
+    rating: '',
+    duration: '',
+    year: '',
+    description: '',
+    review: '',
+    link: '',
+    language: '',
+    tags: []
+  }
+});
 
-// var EntityList = Backbone.Collection.extend({
-//   url: 'http://localhost:1337/user',
-//   model: Entity
-// });
+var EntityList = Backbone.Collection.extend({
+  url: 'http://localhost:8080/api/tshirt',
+  model: Entity
+});
 
-// var entityList = new EntityList();
+var entityList = new EntityList();
 
-// entityList.fetch();
+entityList.fetch();
 
-// var EntityView = Backbone.View.extend({})
+var EntityView = Backbone.View.extend({})
 
-// var EntityListView = Backbone.View.extend({
+var EntityListView = Backbone.View.extend({
 
-//   tagName: 'li',
+  tagName: 'li',
 
-//   render: function() {
-//     this.collection.forEach(this.addOne, this);
-//   },
+  render: function() {
+    this.collection.forEach(this.addOne, this);
+  },
 
-//   addOne: function(entity) {
-//     var entityView = new EntityView({
-//       model: entity
-//     });
-//     this.$el.append(entityView.render().el);
-//   }
-// })
-// var entityListView = new EntityListView({
-//   collection: entityList
-// });
-// entityListView.render();
-// console.log(entityList);
+  addOne: function(entity) {
+    var entityView = new EntityView({
+      model: entity
+    });
+    this.$el.append(entityView.render().el);
+  }
+})
+var entityListView = new EntityListView({
+  collection: entityList
+});
+entityListView.render();
+entityListView.addOne({});
+console.log(entityList);
+
+})(jQuery);
