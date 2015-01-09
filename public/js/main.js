@@ -143,7 +143,7 @@ var Entity = Backbone.Model.extend({
 });
 
 var EntityList = Backbone.Collection.extend({
-  url: 'http://localhost:8080/api/tshirt',
+  url: 'http://localhost:3000/api/beers',
   model: Entity
 });
 
@@ -172,7 +172,6 @@ var entityListView = new EntityListView({
   collection: entityList
 });
 entityListView.render();
-entityListView.addOne({});
 console.log(entityList);
 
 })(jQuery);

@@ -1,15 +1,15 @@
+// Load required packages
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 
-var Tshirt = new Schema({
+// Define our beer schema
+var BeerSchema   = new mongoose.Schema({
   startDate: {
     type: Date,
     default: Date.now,
     require: true
   },
   endDate: {
-    type: Date,
-    default: Date.now
+    type: Date
   },
   source: {
     type: String,
@@ -35,9 +35,7 @@ var Tshirt = new Schema({
     type: String
   },
   rating: {
-    type: Number,
-    max: 5,
-    min: 1
+    type: Number
   },
   duration: {
     type: String
@@ -62,8 +60,5 @@ var Tshirt = new Schema({
   }
 });
 
-// Tshirt.path('model').validate(function(v) {
-//   return ((v != "") && (v != null));
-// });
-
-module.exports = mongoose.model('Tshirt', Tshirt);
+// Export the Mongoose model
+module.exports = mongoose.model('Beer', BeerSchema);
