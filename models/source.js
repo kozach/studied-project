@@ -1,8 +1,6 @@
-// Load required packages
 var mongoose = require('mongoose');
 
-// Define our beer schema
-var BeerSchema   = new mongoose.Schema({
+var SourceSchema = new mongoose.Schema({
   startDate: {
     type: Date,
     default: Date.now,
@@ -61,4 +59,4 @@ var BeerSchema   = new mongoose.Schema({
 });
 
 // Export the Mongoose model
-module.exports = mongoose.model('Beer', BeerSchema);
+module.exports = mongoose.model('Source', SourceSchema);
