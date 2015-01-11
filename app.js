@@ -8,7 +8,7 @@ var port = process.env.PORT || config.port;
 var beers = require('./routes/beers');
 
 // mongoose.connect(config.mongo.uri);
-require('./libs/DB');
+require('./libs/mongooseDB');
 
 app.use(compression());
 app.use(express.static(__dirname + '/public'));
