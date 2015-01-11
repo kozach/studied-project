@@ -34,14 +34,14 @@ router.route('/beers')
     });
   })
 
-.get(function(req, res) {
-  Beer.find(function(err, beers) {
-    if (err)
-      res.send(err);
+  .get(function(req, res) {
+    Beer.find(function(err, beers) {
+      if (err)
+        res.send(err);
 
-    res.json(beers);
+      res.json(beers);
+    });
   });
-});
 
 router.route('/beers/:beer_id')
   .get(function(req, res) {
