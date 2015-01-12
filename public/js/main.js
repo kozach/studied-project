@@ -1,177 +1,173 @@
-
 (function($) {
   // $('#loader').fadeOut(300);
   setTimeout("$('html').removeClass('loading');", 1000)
 
+  // var Sources = Backbone.Collection.extend({
+  //   url: "/api/sources"
+  // });
+  // var Source = Backbone.Model.extend({
+  //   defaults: {
+  //     author: ""
+  //   },
+  //   urlRoot: "/api/sources"
+  // });
+  // var SourcesListView = Backbone.View.extend({
+  //   el: '.page',
+  //   render: function() {
+  //     var sources = new Sources();
+  //     var that = this;
+  //     sources.fetch({
+  //       success: function(data) {
+  //         var template = _.template($('#sources-list-template').html(), {
+  //           data: data.models
+  //         });
+  //         that.$el.html(template);
+  //       }
+  //     });
+  //   }
+  // });
 
+  // var sourcesListView = new SourcesListView();
 
-// Routing
-// var HomeView = Backbone.View.extend({
-//   template: '<h1>Home</h1>',
-//   initialize: function() {
-//     this.render();
-//   },
-//   render: function() {
-//     this.$el.html(this.template);
-//   }
-// });
+  // var SourcesEditView = Backbone.View.extend({
+  //   el: '.page',
+  //   events: {
+  //     'submit .sources-edit-form': 'saveItem',
+  //     'click .delete': 'deleteItem',
+  //     'click .cancel': 'cancelItem'
+  //   },
+  //   item: null,
+  //   cancelItem: function(e) {
+  //     router.navigate('', {
+  //       trigger: true
+  //     });
+  //   },
+  //   deleteItem: function(e) {
+  //     this.item.destroy({
+  //       success: function() {
+  //         router.navigate('', {
+  //           trigger: true
+  //         });
+  //       }
+  //     })
+  //   },
+  //   render: function(options) {
+  //     var that = this;
+  //     if (options.id) {
+  //       this.item = new Source({
+  //         id: options.id
+  //       });
+  //       this.item.fetch({
+  //         success: function(data) {
+  //           var template = _.template($('#sources-edit-template').html(), {
+  //             data: data
+  //           });
+  //           that.$el.html(template);
+  //         }
+  //       });
+  //     } else {
+  //       var template = _.template($('#sources-edit-template').html(), {
+  //         data: null
+  //       });
+  //       this.$el.html(template);
+  //     }
+  //   },
+  //   saveItem: function(e) {
+  //     var details = $(e.currentTarget).serializeObject();
+  //     var source = new Source();
+  //     source.save(details, {
+  //       success: function(data) {
+  //         router.navigate('', {
+  //           trigger: true
+  //         });
+  //       }
+  //     });
+  //     return false;
+  //   }
+  // });
 
-// var AboutView = Backbone.View.extend({
-//   template: '<h1>About</h1>',
-//   initialize: function() {
-//     this.render();
-//   },
-//   render: function() {
-//     this.$el.html(this.template);
-//   }
-// });
+  // var sourcesEditView = new SourcesEditView();
+  // var Router = Backbone.Router.extend({
+  //   routes: {
+  //     "": "home",
+  //     "sources_edit/:id": "edit",
+  //     "sources_new": "edit",
+  //   }
+  // });
 
-// var AppRouter = Backbone.Router.extend({
-//   routes: {
-//     '': 'homeRoute',
-//     'home': 'homeRoute',
-//     'about': 'aboutRoute',
-//   },
-//   homeRoute: function() {
-//     var homeView = new HomeView();
-//     $("#content").html(homeView.el);
-//   },
-//   aboutRoute: function() {
-//     var aboutView = new AboutView();
-//     $("#content").html(aboutView.el);
-//   }
-// });
-// var appRouter = new AppRouter();
-// Backbone.history.start();
+  // var router = new Router;
+  // router.on('route:home', function() {
+  //   sourcesListView.render();
+  // })
+  // router.on('route:edit', function(id) {
+  //   sourcesEditView.render({
+  //     id: id
+  //   });
+  // })
+  // Backbone.history.start();
 
-// Data binding
-// var MessageView = Backbone.View.extend({
-//   template: _.template($('#message-template').html()),
-//   events: {
-//     'keyup #name': 'updateModel'
-//   },
-//   updateModel: function(event) {
-//     this.model.set({
-//       name: $("#name").val()
-//     });
-//   },
-//   initialize: function() {
-//     this.listenTo(this.model, "change", this.render);
-//     this.render();
-//   },
-//   render: function() {
-//     this.$('#message').html(this.template(this.model.toJSON()));
-//     return this;
-//   }
-// });
+  var Contact = Backbone.Model.extend({
+    urlRoot: '/api/sources',
+    defaults: {
+      startDate: '',
+      endDate: '',
+      source: '',
+      format: '',
+      subjects: '',
+      title: '',
+      author: '',
+      titleOriginal: '',
+      rating: '',
+      duration: '',
+      year: '',
+      description: '',
+      review: '',
+      link: '',
+      language: '',
+      tags: []
+    }
+  });
 
-// var person = new Backbone.Model({
-//   name: ''
-// });
-// messageView = new MessageView({
-//   el: $('#message-container'),
-//   model: person
-// });
+  var Directory = Backbone.Collection.extend({
+    url: '/api/sources',
+    model: Contact
+  });
 
-// Templating
-// var HomeView = Backbone.View.extend({
-//   template: _.template($("#home-template").html()),
-//   initialize: function() {
-//     this.render();
-//   },
-//   render: function() {
-//     this.$el.html(this.template({
-//       greeting: "Welcome to Backbone!"
-//     }));
-//   }
-// });
+  var ContactView = Backbone.View.extend({
+    tagName: "article",
+    className: "contact-container",
+    template: $("#contactTemplate").html(),
+    render: function() {
+      var tmpl = _.template(this.template);
+      this.$el.html(tmpl(this.model.toJSON()));
+      return this;
+    }
+  });
+  var DirectoryView = Backbone.View.extend({
+    el: $("#main"),
+    initialize: function() {
+      var that = this;
+      that.collection = new Directory();
+      that.collection.fetch({
+        success: function() {
+          that.render();
+        }
+      });
+    },
+    render: function() {
+      var that = this;
+      _.each(this.collection.models, function(item) {
+        that.renderContact(item);
+      }, this);
+    },
+    renderContact: function(item) {
+      var contactView = new ContactView({
+        model: item
+      });
+      this.$el.append(contactView.render().el);
+    }
+  });
 
-
-// var AboutView = Backbone.View.extend({
-//   template: _.template($("#about-template").html()),
-//   initialize: function() {
-//     this.render();
-//   },
-//   render: function() {
-//     this.$el.html(this.template({
-//       content: "As a software developer, I've always loved to build things..."
-//     }));
-//   }
-// });
-
-// var AppRouter = Backbone.Router.extend({
-//   routes: {
-//     '': 'homeRoute',
-//     'home': 'homeRoute',
-//     'about': 'aboutRoute',
-//   },
-//   homeRoute: function() {
-//     var homeView = new HomeView();
-//     $("#content").html(homeView.el);
-//   },
-//   aboutRoute: function() {
-//     var aboutView = new AboutView();
-//     $("#content").html(aboutView.el);
-//   }
-// });
-
-// var appRouter = new AppRouter();
-// Backbone.history.start();
-
-// Log
-
-var Entity = Backbone.Model.extend({
-  // urlRoot: 'http://localhost:1337/user',
-  defaults: {
-    startDate: '',
-    endDate: '',
-    source: '',
-    format: '',
-    subjects: '',
-    title: '',
-    author: '',
-    titleOriginal: '',
-    rating: '',
-    duration: '',
-    year: '',
-    description: '',
-    review: '',
-    link: '',
-    language: '',
-    tags: []
-  }
-});
-
-var EntityList = Backbone.Collection.extend({
-  url: 'http://localhost:3000/api/beers',
-  model: Entity
-});
-
-var entityList = new EntityList();
-
-entityList.fetch();
-
-var EntityView = Backbone.View.extend({})
-
-var EntityListView = Backbone.View.extend({
-
-  tagName: 'li',
-
-  render: function() {
-    this.collection.forEach(this.addOne, this);
-  },
-
-  addOne: function(entity) {
-    var entityView = new EntityView({
-      model: entity
-    });
-    this.$el.append(entityView.render().el);
-  }
-})
-var entityListView = new EntityListView({
-  collection: entityList
-});
-entityListView.render();
-console.log(entityList);
+  var directory = new DirectoryView();
 
 })(jQuery);

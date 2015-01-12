@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title>First page</title>
   <script src="/js/modernizr.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script defer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js" defer></script>
   <script src="/js/main.js" defer></script>
@@ -13,13 +13,15 @@
 
   <body>
     <div id="main">
-    	<h1>Some text</h1>
     </div>
     <div id="noJs">
       <p>JavaScript is turned off</p>
     </div>
     <div id="loader">
     </div>
+    <script id="contactTemplate" type="text/template">
+        <h1><%= author %></h1>
+    </script>
   </body>
 
 </html>
