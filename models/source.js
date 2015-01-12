@@ -58,5 +58,4 @@ var SourceSchema = new mongoose.Schema({
   }
 });
 
-// Export the Mongoose model
 module.exports = mongoose.model('Source', SourceSchema);
