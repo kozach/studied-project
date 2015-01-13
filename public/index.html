@@ -21,6 +21,13 @@
     </div>
     <script id="contactTemplate" type="text/template">
         <h1><%= title %></h1>
+        <% _.each(author, function(item) { %>
+            <span><%= item %></span>
+        <% }); %>
+        <br />
+        <% _.each(tags, function(item) { %>
+            <span><%= item %></span>
+        <% }); %>
     </script>
   </body>
 
