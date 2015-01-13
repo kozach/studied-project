@@ -108,24 +108,25 @@
 
   var Contact = Backbone.Model.extend({
     urlRoot: '/api/sources',
-    defaults: {
-      startDate: '',
-      endDate: '',
-      source: '',
-      format: '',
-      subjects: '',
-      title: '',
-      author: '',
-      titleOriginal: '',
-      rating: '',
-      duration: '',
-      year: '',
-      description: '',
-      review: '',
-      link: '',
-      language: '',
-      tags: []
-    }
+    // defaults: {
+    //   startDate: [],
+    //   endDate: [],
+    //   source: '',
+    //   format: '',
+    //   subject: '',
+    //   title: '',
+    //   author: [],
+    //   titleOriginal: '',
+    //   rating: '',
+    //   duration: '',
+    //   year: '',
+    //   description: '',
+    //   review: '',
+    //   link: '',
+    //   language: '',
+    //   tags: []
+    // }
+    idAttribute: "_id",
   });
 
   var Directory = Backbone.Collection.extend({
@@ -164,10 +165,35 @@
       var contactView = new ContactView({
         model: item
       });
+      // item.save();
       this.$el.append(contactView.render().el);
     }
   });
 
   var directory = new DirectoryView();
+
+// _.each(jsonD, function(item) {
+//   item.tags = item.tags.split(",");
+//   item.author = item.author.split(",");
+//   item.endDate = item.endDate.split(",");
+//   item.startDate = item.startDate.split(",");
+//   _.each(item.tags, function(val, key) {
+//     item.tags[key] = val.trim();
+//   });
+//   _.each(item.author, function(val, key) {
+//     item.author[key] = val.trim();
+//   });
+//   _.each(item.endDate, function(val, key) {
+//     item.endDate[key] = val.trim();
+//   });
+//   _.each(item.startDate, function(val, key) {
+//     item.startDate[key] = val.trim();
+//   });
+//   delete item.source
+//   delete item.subject
+//   delete item.description
+//   delete item.language
+// });
+// console.log(JSON.stringify(jsonD));
 
 })(jQuery);

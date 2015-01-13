@@ -2,31 +2,30 @@ var mongoose = require('mongoose');
 
 var SourceSchema = new mongoose.Schema({
   startDate: {
-    type: Date,
-    default: Date.now,
+    type: Array,
     require: true
   },
   endDate: {
-    type: Date
+    type: Array
   },
-  source: {
-    type: String,
-    require: true
-  },
+  // source: {
+  //   type: String,
+  //   require: true
+  // },
   format: {
     type: String,
     require: true
   },
-  subject: {
-    type: String,
-    require: true
-  },
+  // subject: {
+  //   type: String,
+  //   require: true
+  // },
   title: {
     type: String,
     require: true
   },
   author: {
-    type: String,
+    type: Array,
     require: true
   },
   titleOriginal: {
@@ -41,18 +40,18 @@ var SourceSchema = new mongoose.Schema({
   year: {
     type: Number
   },
-  description: {
-    type: String
-  },
+  // description: {
+  //   type: String
+  // },
   review: {
     type: String
   },
   link: {
     type: String
   },
-  language: {
-    type: String
-  },
+  // language: {
+  //   type: String
+  // },
   tags: {
     type: Array
   }
