@@ -120,7 +120,7 @@
   // Backbone.history.start();
 
 
-  var Contact = Backbone.Model.extend({
+  var Element = Backbone.Model.extend({
     urlRoot: '/api/sources',
   // defaults: {
   // startDate: [],
@@ -143,43 +143,42 @@
     idAttribute: "_id",
   });
 
-  var Directory = Backbone.Collection.extend({
+  var List = Backbone.Collection.extend({
     url: '/api/sources',
-    model: Contact
+    model: Element
   });
 
-  var ContactView = Backbone.View.extend({
+  var ElementView = Backbone.View.extend({
     tagName: "article",
-    className: "contact-container",
-    template: $("#contactTemplate").html(),
+    template: $("#elementTemplate").html(),
     render: function() {
       var tmpl = _.template(this.template);
       this.$el.html(tmpl(this.model.toJSON()));
       return this;
     }
   });
-  var DirectoryView = Backbone.View.extend({
+  var ListView = Backbone.View.extend({
     el: $("#main"),
     initialize: function() {
       var that = this;
-      that.collection = new Directory();
+      that.collection = new List();
       that.collection.fetch({async:false});
     },
     render: function() {
       var that = this;
       _.each(this.collection.models, function(item) {
-        that.renderContact(item);
+        that.renderElement(item);
       }, this);
     },
-    renderContact: function(item) {
-      var contactView = new ContactView({
+    renderElement: function(item) {
+      var elementView = new ElementView({
         model: item
       });
-      this.$el.append(contactView.render().el);
+      this.$el.append(elementView.render().el);
     }
   });
 
-  var directory = new DirectoryView();
+  var list = new ListView();
 
   var Router = Backbone.Router.extend({
       routes: {
@@ -191,7 +190,7 @@
 
   var router = new Router;
   router.on('route:home', function() {
-    directory.render();
+    list.render();
   })
   Backbone.history.start();
 
