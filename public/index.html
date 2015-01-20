@@ -19,15 +19,14 @@
     </div>
     <div id="loader">
     </div>
-    <script id="elementTemplate" type="text/template">
-        <h1><%= title %></h1>
-        <% _.each(author, function(item) { %>
-            <span><%= item %></span>
-        <% }); %>
-        <br />
-        <% _.each(tags, function(item) { %>
-            <span><%= item %></span>
-        <% }); %>
+    <script id="listTemplate" type="text/template">
+    <% _.each(data, function(item) { %>
+      <h1><%= item.get('title') %></h1>
+      <a href="#/<%= item.get('_id') %>">edit</a>
+    <% }); %>
+    </script>
+    <script type="text/template" id="elementTemplate">
+      <h1> <%= data.get('author') %> </h1>
     </script>
   </body>
 

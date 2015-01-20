@@ -122,75 +122,109 @@
 
   var Element = Backbone.Model.extend({
     urlRoot: '/api/sources',
-  // defaults: {
-  // startDate: [],
-  // endDate: [],
-  // source: '',
-  // format: '',
-  // subject: '',
-  // title: '',
-  // author: [],
-  // titleOriginal: '',
-  // rating: '',
-  // duration: '',
-  // year: '',
-  // description: '',
-  // review: '',
-  // link: '',
-  // language: '',
-  // tags: []
-  // }
+    defaults: {
+      startDate: [],
+      endDate: [],
+      source: '',
+      format: '',
+      subject: '',
+      title: '',
+      author: [],
+      titleOriginal: '',
+      rating: '',
+      duration: '',
+      year: '',
+      description: '',
+      review: '',
+      link: '',
+      language: '',
+      tags: []
+    },
     idAttribute: "_id",
   });
 
   var List = Backbone.Collection.extend({
     url: '/api/sources',
-    model: Element
-  });
-
-  var ElementView = Backbone.View.extend({
-    tagName: "article",
-    template: $("#elementTemplate").html(),
-    render: function() {
-      var tmpl = _.template(this.template);
-      this.$el.html(tmpl(this.model.toJSON()));
-      return this;
+    model: Element,
+    initialize: function() {
+      this.deferred = this.fetch();
     }
   });
+
+  var list = new List();
+
   var ListView = Backbone.View.extend({
     el: $("#main"),
-    initialize: function() {
-      var that = this;
-      that.collection = new List();
-      that.collection.fetch({async:false});
-    },
     render: function() {
       var that = this;
-      _.each(this.collection.models, function(item) {
-        that.renderElement(item);
-      }, this);
-    },
-    renderElement: function(item) {
-      var elementView = new ElementView({
-        model: item
+      list.deferred.done(function() {
+        var template = _.template($('#listTemplate').html());
+        that.$el.html(template({
+          data: list.models
+        }));
       });
-      this.$el.append(elementView.render().el);
     }
   });
 
-  var list = new ListView();
+  var ElementEditView = Backbone.View.extend({
+    el: '#main',
+    events: {
+      'submit .collectionname-edit-form': 'saveItem',
+      'click .delete': 'deleteItem'
+    },
+    item: null,
+    deleteItem: function(e) {
+      this.item.destroy({
+        success: function() {
+          router.navigate('', {
+            trigger: true
+          });
+        }
+      })
+    },
+    render: function(options) {
+      var that = this;
+      list.deferred.done(function() {
+        var model = list.get(options.id);
+        var template = _.template($('#elementTemplate').html());
+        that.$el.html(template({
+          data: model
+        }));
+      });
+    },
+    saveItem: function(e) {
+      var details = $(e.currentTarget).serializeObject();
+      var element = new Element();
+      element.save(details, {
+        success: function(data) {
+          router.navigate('', {
+            trigger: true
+          });
+        }
+      });
+      return false;
+    }
+  });
+
+  var elementEditView = new ElementEditView();
+  var listView = new ListView();
 
   var Router = Backbone.Router.extend({
-      routes: {
-        "": "home",
-        "source/:id": "edit",
-        "source/add": "add",
-      }
+    routes: {
+      "": "home",
+      ":id": "edit",
+      "add": "edit",
+    }
   });
 
   var router = new Router;
   router.on('route:home', function() {
-    list.render();
+    listView.render();
+  })
+  router.on('route:edit', function(id) {
+    elementEditView.render({
+      id: id
+    });
   })
   Backbone.history.start();
 
