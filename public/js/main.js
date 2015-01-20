@@ -166,13 +166,17 @@
     }
   });
 
-  var ElementEditView = Backbone.View.extend({
+  var ElementView = Backbone.View.extend({
     el: '#main',
     events: {
-      'submit .collectionname-edit-form': 'saveItem',
-      'click .delete': 'deleteItem'
+      'submit .element-edit-form': 'saveItem',
+      // 'click .delete': 'deleteItem',
+      'click .cancel': 'cancelItem'
     },
     item: null,
+    cancelItem : function (e) {
+        router.navigate('', {trigger:true});
+    },
     deleteItem: function(e) {
       this.item.destroy({
         success: function() {
@@ -184,35 +188,47 @@
     },
     render: function(options) {
       var that = this;
-      list.deferred.done(function() {
-        var model = list.get(options.id);
+      if (options.id) {
+        list.deferred.done(function() {
+          var element = list.get(options.id);
+          var template = _.template($('#elementTemplate').html());
+          that.$el.html(template({
+            data: element
+          }));
+        });
+      }else {
         var template = _.template($('#elementTemplate').html());
         that.$el.html(template({
-          data: model
+          data: null
         }));
-      });
+      }
     },
     saveItem: function(e) {
-      var details = $(e.currentTarget).serializeObject();
-      var element = new Element();
-      element.save(details, {
-        success: function(data) {
-          router.navigate('', {
-            trigger: true
-          });
-        }
-      });
-      return false;
+      e.preventDefault();
+      var formData = {
+        title: this.$(".title").val()
+      };
+      var element = new Element(formData);
+      list.add(element)
+      // element.save(formData, {
+      //   success: function(data) {
+      //     console.log('saved!');
+      //     router.navigate('', {
+      //       trigger: true
+      //     });
+      //     collection.add(element)
+      //   }
+      // });
     }
   });
 
-  var elementEditView = new ElementEditView();
+  var elementView = new ElementView();
   var listView = new ListView();
 
   var Router = Backbone.Router.extend({
     routes: {
       "": "home",
-      ":id": "edit",
+      "edit/:id": "edit",
       "add": "edit",
     }
   });
@@ -222,7 +238,7 @@
     listView.render();
   })
   router.on('route:edit', function(id) {
-    elementEditView.render({
+    elementView.render({
       id: id
     });
   })

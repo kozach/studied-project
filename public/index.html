@@ -21,12 +21,27 @@
     </div>
     <script id="listTemplate" type="text/template">
     <% _.each(data, function(item) { %>
-      <h1><%= item.get('title') %></h1>
-      <a href="#/<%= item.get('_id') %>">edit</a>
+      <h1><%= item.attributes.title %></h1>
+      <a href="#/edit/<%= item.id %>">edit</a>
     <% }); %>
     </script>
     <script type="text/template" id="elementTemplate">
-      <h1> <%= data.get('author') %> </h1>
+      <form class="element-edit-form">
+        <legend><%= data ? 'Edit' : 'New' %></legend>
+          <label>Title</label>
+            <input class="title" name="title" type="text" value="<%= data ? data.attributes.title : '' %>"> 
+          <label>Author</label>
+            <input name="author" type="text" value="<%= data ? data.attributes.author : '' %>"> 
+          <label>Duration</label>
+            <input name="duration" type="text" value="<%= data ? data.attributes.duration : '' %>"> 
+        <hr />
+        <input type="submit" class="btn" value="<%= data ? 'Update' : 'Create' %>" />
+        <% if (data) { %>
+          <input type="hidden" name="id" value="<%= data.id %>" />
+          <input type="button" class="btn btn-danger delete" value="Delete" /> 
+        <% }; %>
+        <input type="button" class="btn cancel" value="Back" />
+      </form>
     </script>
   </body>
 
